@@ -1,0 +1,41 @@
+#!/usr/bin/bash
+
+
+# The GIT_DIR environment variable specifies a path to use instead of the default .git for the base
+# of the repository. The --git-dir command-line option also sets this value. It can be an absolute
+# path or relative path to current working directory. The default is "GIT_DIR=.git".  Since we are
+# in a bare git repo (with no .git directory), set it to "."
+GIT_DIR=.
+
+# Save the location we wish to use as our working tree in an environment variable called TARGET
+# Since we are not at the top-level directory of the working tree (we're in a bare repo with no
+# working tree), you should tell Git where the top-level of the working tree is, with the
+# --work-tree=<path> option. This is where Git will recreate our projects files and folders
+# and where we can execute other scripts if we wish.
+TARGET=/home/$USER/my-project
+
+# Setup a bash "while read" loop to read the arguments passed to this script by Git
+while read oldrev newrev ref; do
+  # Get the name of the banch that was just pushed
+  BRANCH=$(git rev-parse --symbolic --abbrev-ref $ref)
+
+  # Check if we pushed to the "main" branch
+  if [[ $BRANCH == "main" ]]; then
+    # Send a message to the machine that's doing the push
+    echo "Push received! Deploying to branch: '${BRANCH}'"
+
+    # Ensure the location where we wish to checkout our working tree exists
+    if [[ ! -d $TARGET ]]; then
+      mkdir $TARGET
+    fi
+
+    # Checkout the branch we just pushed. Since we set the GIT_WORK_TREE environment variable above
+    # to /home/$USER/my-project, this will recreate our project's directory structure just as it was
+    # when in our local repo when we pushed our changes. The  --force flag will throw away any local
+    # modifications made in our GIT_WORK_TREE directory
+    git --work-tree $TARGET checkout --force $BRANCH
+  else
+    echo "Not on main branch. Skipping deployment"
+  fi
+
+done

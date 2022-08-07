@@ -86,10 +86,11 @@ curl -SL https://github.com/docker/compose/releases/download/v2.9.0/docker-compo
 chmod +x ~/.docker/cli-plugins/docker-compose
 ```
 
-### Disable something in docker daemon to make UFW work
-https://docs.docker.com/config/daemon/#configure-the-docker-daemon
+### Ensure that Docker is behind the firewall
 
 Docker modifies iptables directly to set up communication to and from containers. This means that UFW won’t give you a full picture of the firewall settings. You can override this behavior in Docker by adding --iptables=false to the Docker daemon
+
+https://docs.docker.com/config/daemon/#configure-the-docker-daemon
 
 To configure the Docker daemon using a JSON file, create a file at `/etc/docker/daemon.json`
 
