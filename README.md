@@ -10,7 +10,7 @@
 - [Initial droplet setup](/docs/initial-droplet-setup.md)
 - [Install docker and docker-compose](/docs/install-docker-and-compose.md)
 - [Setup git deployment](/docs/setup-raw-git-repo-for-deployment.md)
-- [Configure wagtail app]()
+- [Configure wagtail app](/docs/configure-wagtail-app.md)
 
 
 ## Setup Postgres Droplet
