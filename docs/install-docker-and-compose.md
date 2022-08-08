@@ -86,21 +86,5 @@ curl -SL https://github.com/docker/compose/releases/download/v2.9.0/docker-compo
 chmod +x ~/.docker/cli-plugins/docker-compose
 ```
 
-### Ensure that Docker is behind the firewall
-
-Docker modifies iptables directly to set up communication to and from containers. This means that UFW won’t give you a full picture of the firewall settings. You can override this behavior in Docker by adding --iptables=false to the Docker daemon
-
-https://docs.docker.com/config/daemon/#configure-the-docker-daemon
-
-To configure the Docker daemon using a JSON file, create a file at `/etc/docker/daemon.json`
-
-```json
-{
-  "iptables": false
-}
-```
-
-Restart the docker daemon
-```bash
-sudo systemctl restart docker.service
-```
+### Docker and UFW
+Docker and the UFW firewall don't play nicely together. If you need a fireware (which you likely do), you should setup a [DigitalOcean Cloud Firewall](https://docs.digitalocean.com/tutorials/recommended-droplet-setup/#step-3-create-a-cloud-firewall)
