@@ -50,7 +50,7 @@ su - ${USER}
 
 ### Install Docker Compose
 
-Installing the latest version from the repository
+Installing the latest version from the repository (this is the method recommended in the [official docs](https://docs.docker.com/compose/install/#install-compose))
 ```bash
 # Update your existing list of packages:
 sudo apt update
@@ -74,7 +74,7 @@ sudo apt install docker-compose-plugin
 sudo apt install docker-compose-plugin=2.5.0~ubuntu-jammy
 ```
 
-Manually (the [official docs](https://docs.docker.com/compose/install/#install-compose) don't recommend this)
+Manually (the [official docs](https://docs.docker.com/compose/install/#install-compose) **_do not_** recommend this because it requires also managing upgrades manually)
 ```bash
 # Create a directory to store the docker-compose binary
 mkdir -p ~/.docker/cli-plugins/

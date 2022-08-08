@@ -1,12 +1,27 @@
 # Configuring Wagtail App
 
-[Wagtail](https://docs.wagtail.org/en/stable/index.html) is a content management system built on top of [Django](https://docs.djangoproject.com/en/4.1/)
+[Wagtail](https://docs.wagtail.org/en/stable/index.html) is a content management system built on top of [Django](https://docs.djangoproject.com/en/4.1/).
+
+We will use Docker to install and run all the software needed to serve our Wagtail app securely behind Nginx, popular web server software, which we'll use to force all requests to our Wagtail app to use https. This will ensure that all information that users of our Wagtail app send to and receive from our server will be encrypted while in transit over the internet. 
+
+*The configuration described here assumes that [Docker and Docker Compose are installed](/docs/install-docker-and-compose.md) on our droplet*
 
 ## Required Environment Variables
 
 ### Django Settings
 - **`DJANGO_ALLOWED_HOSTS`**: This value is used to for Django's [ALLOWED_HOSTS](https://docs.djangoproject.com/en/4.1/ref/settings/#allowed-hosts) setting
-- **`DJANGO_SETTINGS_MODULE`**: This value [instructs Django which which settings module to use](https://docs.djangoproject.com/en/4.1/topics/settings/#designating-the-settings). It should be in Python path syntax. **If this value is not set, any cli commands using `manage.py` will default to using development settings.** For deploying to production, it might look something like this: `myproject.settings.production`
+- **`DJANGO_SETTINGS_MODULE`**: This value [instructs Django which which settings module to use](https://docs.djangoproject.com/en/4.1/topics/settings/#designating-the-settings). It should be in Python path syntax. **If this value is not set, any cli commands using `manage.py` will default to using development settings.** For a Wagtail app with the directory structure below, this value should be `myproject.settings.production` when deploying to production.
+  ```
+  myproject
+    ├── myproject
+    │   ├── __init__.py
+    │   ├── settings
+    │   │   ├── __init__.py
+    │   │   ├── base.py
+    │   │   ├── dev.py
+    │   │   └── production.py
+    ├── manage.py
+  ```
 - **`DJANGO_SECRET_KEY`**: This value is used for Django's [SECRET_KEY](https://docs.djangoproject.com/en/4.0/ref/settings/#secret-key) setting.
 
 ### Django Storages
