@@ -14,7 +14,8 @@
 
 
 ## Setup Postgres Droplet
-*See [initial droplet setup](/docs/initial-droplet-setup.md)*
+- [Initial droplet setup](/docs/initial-droplet-setup.md)
+- [Install and setup Postgres](/docs/postgres-install-and-setup.md)
 
 ## Setup Spaces
 
