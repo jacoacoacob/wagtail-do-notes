@@ -2,6 +2,8 @@
 
 [Wagtail](https://docs.wagtail.org/en/stable/index.html) is a content management system built on top of [Django](https://docs.djangoproject.com/en/4.1/).
 
+We'll use Docker Compose to run our Wagtail app more securly behind an [Nginx reverse proxy server](https://www.nginx.com/resources/glossary/reverse-proxy-server/). We'll configure our Nginx container to use an SSL certificate procured with Certbot to serve our Wagtail app using https so that all trafic between our Wagtail app users' browsers and the server is encrypted.
+
 We will use Docker to install and run all the software needed to serve our Wagtail app securely behind Nginx, popular web server software, which we'll use to force all requests to our Wagtail app to use https. This will ensure that all information that users of our Wagtail app send to and receive from our server will be encrypted while in transit over the internet. 
 
 *The configuration described here assumes that [Docker and Docker Compose are installed](/docs/install-docker-and-compose.md) on our droplet*

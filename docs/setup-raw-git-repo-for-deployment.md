@@ -91,3 +91,8 @@ Finally, make the `post-reveive` hook executable. Run this command from the root
 ```
 $ sudo chmod +x hooks/post-receive
 ```
+
+As a bonus. You can create this file your work laptop (or equivelant) and then use `rsync` to copy it to your new git remote
+```
+rsync rsync -chv --progress hooks/post-receive charile@<my_server_ip>:/home/charlie/my-project.git/hooks/
+```

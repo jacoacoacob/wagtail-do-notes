@@ -173,9 +173,13 @@ _Carefully follow these [certificate deletion instructions](https://eff-certbot.
       -d db.domain.com
     ```
 5. Update the `host` entry in our `pg_hba.conf` file to be a `hostssl` entry
-6. Update any connection strings for clients you want to use SSL to include `sslmode=verify-full` **and** `sslrootcert=/etc/ssl/certs/ca-certificates.crt`
+6. Update any connection strings for clients you want to use SSL to include `sslmode=verify-full` **and** `sslrootcert=/etc/ssl/certs/ca-certificates.crt`. In our case, the client is a wagtail app running in a docker container on another droplet.
     ```
     postgresql://db_user:password@db.domain.com:5432/db_name?sslmode=verify-full&sslrootcert=/etc/ssl/certs/ca-certificates.crt
     ```
-    `sslrootcert` points to the file containing our CA's (Certificate Authority) root certificate. The Ubuntu package `ca-certificates` will contain our root cert and should be installed in our docker container already. Refer to the [ca-certificates package documentation](https://ubuntu.com/server/docs/security-trust-store) for more.
+    `sslrootcert` points to the file containing our CA's (Certificate Authority) root certificate. The Ubuntu package `ca-certificates` will contain our root cert and should be installed in our docker container already. You can verify that `ca-certificates` is installed and has the root certificates by running
+    ```bash
+    docker exec -it <container_name> 
+    ```
+    Refer to the [ca-certificates package documentation](https://ubuntu.com/server/docs/security-trust-store) for more.
 
