@@ -182,4 +182,16 @@ _Carefully follow these [certificate deletion instructions](https://eff-certbot.
     docker exec -it <container_name> 
     ```
     Refer to the [ca-certificates package documentation](https://ubuntu.com/server/docs/security-trust-store) for more.
-
+7. Verify clients are connecting with SSL
+    ```sql
+    SELECT ssl.pid, usename, datname, ssl, ssl.version, ssl.cipher, ssl.bits, client_addr
+    FROM pg_catalog.pg_stat_ssl ssl, pg_catalog.pg_stat_activity activity
+    WHERE ssl.pid = activity.pid;
+    ```
+    expected output
+    ```
+    pid   |  usename  | datname | ssl | version |         cipher         | bits |  client_addr
+    ------+-----------+---------+-----+---------+------------------------+------+-------------------
+    51664 | my_app    | my_app  | t   | TLSv1.3 | TLS_AES_256_GCM_SHA384 |  256 | <my_app_server_ip>
+    51767 | postgres  | my_app  | f   |         |                        |      |
+    ```
